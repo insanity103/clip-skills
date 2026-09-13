@@ -1,0 +1,8 @@
+{"note": "Screen-fixed game UI under old delivered overlay elements (+16px margin), labelled from full-res frames every 0.5s. dont_care = world-space killstreak icons.",
+ "clips": {
+  "c3v3": {"video": "c3v3_noov.mp4", "boxes": "mw4_clip3_old.boxes.json", "duration": 15.5,
+           "truth": {"hook": [[0.0, 6.5]], "title": [[0.0, 6.5]], "sub": [[4.0, 6.5], [8.5, 10.0], [10.5, 12.3]],
+                     "logo": [[6.5, 7.8], [11.5, 14.2]]},
+           "dont_care": {"hook": [[13.3, 15.5]], "title": [[13.3, 15.5]], "sub": [[13.3, 15.5]]}},
+  "c4v2": {"video": "c4v2_noov.mp4", "boxes": "mw4_clip4_old.boxes.json", "duration": 14.0,
+           "truth": {"logo": [[0.3, 14.0]]}, "score_only": ["logo"]}}}

@@ -1,0 +1,28 @@
+{
+ "caption": {
+  "required_phrases": [
+   "Face the darkness — The Hollowing arrives October 31st"
+  ],
+  "required_tags": [
+   "@thehollowinggame",
+   "@dreadlightgames"
+  ],
+  "tags_position": "end",
+  "disclosure": {
+   "options": [
+    "#Sponsored"
+   ],
+   "after_phrase": true,
+   "own_line": false
+  },
+  "max_extra_hashtags": 2,
+  "language": "en"
+ },
+ "render": {
+  "fps": 30
+ },
+ "duration": {
+  "min": 20,
+  "max": 60
+ }
+}

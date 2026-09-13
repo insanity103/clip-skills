@@ -1,0 +1,27 @@
+{
+ "caption": {
+  "required_phrases": [
+   "Step into the arena — Iron Fist: Tournament of Shadows, out now"
+  ],
+  "required_tags": [
+   "@ironfistgame"
+  ],
+  "disclosure": {
+   "options": [
+    "#Ad",
+    "#Advertisement",
+    "#Sponsored"
+   ],
+   "after_phrase": true
+  },
+  "max_extra_hashtags": 3,
+  "language": "en"
+ },
+ "render": {
+  "fps": 60
+ },
+ "duration": {
+  "min": 10,
+  "max": 45
+ }
+}

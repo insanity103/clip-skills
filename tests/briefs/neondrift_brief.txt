@@ -1,0 +1,62 @@
+Neon Drift: Circuit Overdrive — Racing Gameplay Clipping Campaign
+
+WHAT TO DO
+- Post short-form vertical clips (15-30 seconds) to TikTok, Instagram Reels, and YouTube Shorts showcasing the most visually spectacular racing moments from Neon Drift: Circuit Overdrive.
+- Feature moments: impossible drifts around tight corners, last-second overtakes, boost-chain combos, and photofinish victories on neon-lit tracks.
+- Clips should feel cinematic and fast. Emphasise speed, motion blur, and the game's signature neon visual style.
+
+CONTENT FOLDER RULE
+- Use only footage from the official Velocity Dynamics shared Google Drive folder titled "NeonDrift_Marketing_Assets".
+- Footage is supplied in 4K HDR (3840x2160, HDR10). Clips must be tone-mapped to SDR before posting.
+
+TAGGING REQUIREMENT
+- Every post must include both @neondriftgame and @velocitydynamics in the caption.
+- Tags must appear at the end of the caption, separated from the main body by a blank line.
+
+CAPTION GUIDELINES
+- Each caption must include the exact phrase: "Race through the neon — Neon Drift launches September 14th"
+- The phrase must appear as a single unbroken sentence.
+- Captions must be in English while the game UI is displayed in Japanese (this is intentional and must not be translated or overlaid).
+
+FTC DISCLOSURE
+- Allowed disclosure hashtag: #Sponsored only. No other disclosure format is accepted.
+- The #Sponsored hashtag must appear as the very first word in the caption (before any other text).
+
+LOGO WATERMARK REQUIREMENT
+- The Neon Drift logo must appear on screen for the full duration of every clip.
+- The logo must be placed in the top-left corner of the frame.
+- The logo must not exceed 15% of the frame width.
+- The logo file is provided as "neondrift_logo_full.png" in the Drive folder.
+
+ON-SCREEN TEXT
+- Required phrase: "Out Now"
+- Allowed close variations: "Available Now", "Play Today"
+- The on-screen text must be placed in the lower third of the frame, centred horizontally.
+- Text must be legible against the neon background — use a dark semi-transparent backing bar.
+
+EDITING GUIDELINES
+- Centre-crop the 4K HDR source to 9:16 vertical format at 1080x1920.
+- Tone-map HDR to SDR before cropping (the source is HDR10 / BT.2020 / PQ).
+- Conform frame rate to 30 fps (the source is variable frame rate from a 120 fps capture card).
+- Do not alter playback speed. No slow motion.
+- Original game audio only. In-game licensed music (synthwave radio tracks) must be removed or replaced with the provided royalty-free alternative track "neondrift_alt_audio.wav".
+- No voice chat audio.
+- Subtle motion blur or speed lines are acceptable as overlays.
+
+REQUIREMENTS
+- Clip length: 15-30 seconds inclusive (strict — clips outside this range will be rejected).
+- Language: English captions. Game UI is in Japanese and must remain as-is.
+- Posts must remain live for a minimum of 60 days.
+- Likes and engagement metrics must be visible.
+- Maximum of 3 reposts per clip across all platforms combined.
+- No paid boosting.
+
+NOT ALLOWED
+- No footage from other racing games.
+- No in-game licensed music (synthwave radio tracks).
+- No voice chat audio.
+- No slow motion or time-remapping of any kind.
+- No creator watermarks, logos, or channel branding.
+- No overlays that obscure more than 10% of the frame.
+- No text other than the required on-screen text and the logo watermark.
+- No footage from tracks marked "WIP" or "Coming Soon" in the Drive folder.

@@ -1,0 +1,27 @@
+{
+ "caption": {
+  "required_phrases": [
+   "Race through the neon — Neon Drift launches September 14th"
+  ],
+  "required_tags": [
+   "@neondriftgame",
+   "@velocitydynamics"
+  ],
+  "tags_position": "end",
+  "disclosure": {
+   "options": [
+    "#Sponsored"
+   ],
+   "position": "start"
+  },
+  "max_extra_hashtags": 0,
+  "language": "en"
+ },
+ "render": {
+  "fps": 30
+ },
+ "duration": {
+  "min": 15,
+  "max": 30
+ }
+}

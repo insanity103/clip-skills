@@ -1,0 +1,20 @@
+{
+  "name": "Call of Duty - Modern Warfare 4 Multiplayer Beta Gameplay Clipping",
+  "platforms": ["tiktok", "reels", "shorts"],
+  "source_rule": "Only footage from the official MediaSilo content folder",
+  "duration": {"min": 10, "max": 60},
+  "audio": "original_only",
+  "language": "en",
+  "caption": {
+    "required_phrases": ["Pre-order Modern Warfare 4 today and play day one, October 23rd"],
+    "required_tags": ["@callofduty"],
+    "disclosure": {"options": ["#Ad", "#Advertisement", "#Sponsored"]},
+    "max_extra_hashtags": 3,
+    "language": "en"
+  },
+  "onscreen": {
+    "required_text_any": [["MW4 Open Beta", "This Weekend"], ["MW4 Beta Weekend"]],
+    "logo_required": true
+  },
+  "posting": {"min_days_live": 30, "likes_visible": true, "max_reposts": 5, "paid_boosting": false}
+}

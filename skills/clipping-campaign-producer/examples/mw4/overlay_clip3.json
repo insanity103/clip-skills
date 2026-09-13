@@ -1,0 +1,8 @@
+{"margin": 60,
+ "defaults": {"font": ["DIN Condensed Bold", "DejaVu Sans Condensed Bold"]},
+ "elements": [
+  {"id": "hook",  "type": "text",  "text": "SNIPER DOESN'T MISS", "size": 52, "color": "#FED000", "y": 150},
+  {"id": "title", "type": "text",  "text": "MW4 OPEN BETA", "size": 108, "color": "#FFFFFF", "below": "hook", "gap": 6},
+  {"id": "sub",   "type": "text",  "text": "THIS WEEKEND", "size": 78, "color": "#FED000", "below": "title", "gap": 6},
+  {"id": "logo",  "type": "image", "src": "mw4_logo_white.png", "width": 320, "y": 1340}
+ ]}

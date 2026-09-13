@@ -1,0 +1,66 @@
+The Hollowing — Horror Game Clipping Campaign
+
+WHAT TO DO
+- Post short-form vertical clips (20-60 seconds) to TikTok, Instagram Reels, and YouTube Shorts showcasing the most terrifying and atmospheric moments from The Hollowing.
+- Feature moments: jump scares, environmental horror reveals, tense exploration sequences, and creature encounters.
+- Clips should build suspense and deliver a payoff. Emphasise atmosphere, lighting, and sound design.
+
+CONTENT FOLDER RULE
+- Use only footage from the official Dreadlight Games shared Dropbox folder titled "TheHollowing_Launch_Footage".
+- Footage is supplied in 21:9 ultrawide (3440x1440, 60 fps, SDR, progressive). The extra-wide frame must be cropped to 16:9 before the vertical centre-crop.
+
+TAGGING REQUIREMENT
+- Every post must include both @thehollowinggame and @dreadlightgames in the caption.
+- Tags must be placed at the very end of the caption.
+
+CAPTION GUIDELINES
+- Each caption must include the exact phrase: "Face the darkness — The Hollowing arrives October 31st"
+- The phrase must appear as written. No rewording or paraphrasing.
+- Captions must be in English. The game UI is in Korean and must remain as-is (do not overlay English translations).
+
+FTC DISCLOSURE
+- Allowed disclosure hashtag: #Sponsored only.
+- Must appear as the first hashtag in the caption, immediately after the required phrase.
+- No other disclosure format (#Ad, #Advertisement, #PaidPartnership) is accepted for this campaign.
+
+LOGO WATERMARK REQUIREMENT
+- The Hollowing logo must appear on screen for the full duration of every clip.
+- The logo must be placed in the bottom-left corner of the frame.
+- The logo must be at least 80px wide at 1080x1920 resolution and rendered in white with a drop shadow.
+- The logo file is provided as "thehollowing_logo_white.png" in the Dropbox folder.
+
+ON-SCREEN TEXT
+- Required phrase: "Wishlist Now"
+- Allowed close variations: "Pre-Order Now", "Coming Soon"
+- The on-screen text must be visible for at least 3 seconds per clip.
+- Text must be placed in the upper third of the frame, centred.
+- Text must not overlap with the logo watermark or the game's minimal HUD (located in the bottom-right).
+
+EDITING GUIDELINES
+- First crop the 21:9 source (3440x1440) to 16:9 (2560x1440) from centre, then centre-crop to 9:16 (1080x1920).
+- Conform frame rate to 30 fps (the slow, cinematic pacing suits the horror genre).
+- Playback speed must not be altered. No slow motion. No speed ramping.
+- Original game audio only. No added music, voiceover, or sound effects.
+- Voice chat must be muted if present on a separate audio track.
+- In-game licensed ambient music tracks (from the "Licensed_AMB" audio sub-stream) must be removed or muted. Use the "game_sfx_only.wav" alternate audio file provided in the Dropbox folder.
+- Light vignetting or subtle film-grain overlays are acceptable to enhance the horror atmosphere.
+- No jump cuts within a single scare sequence — let the tension build naturally.
+
+REQUIREMENTS
+- Clip length: 20-60 seconds inclusive (strict minimum of 20 seconds to allow suspense buildup).
+- Language: English captions and on-screen text. Game UI is in Korean and must not be translated or overlaid.
+- Posts must remain live for a minimum of 60 days.
+- Likes and engagement metrics must be visible.
+- Maximum of 4 reposts per clip across all platforms combined.
+- No paid boosting.
+
+NOT ALLOWED
+- No footage from other horror games.
+- No in-game licensed ambient music (from "Licensed_AMB" sub-stream).
+- No voice chat audio.
+- No slow motion or time-stretching.
+- No personal watermarks, TikTok usernames, or creator branding.
+- No excessive flashing or strobe effects (accessibility requirement — max 3 flashes per second).
+- No footage from the "Developer Commentary" mode in the source folder.
+- No jump scares that occur in the first 5 seconds of a clip (the brief requires a suspense build-up).
+- No clips shorter than 20 seconds.

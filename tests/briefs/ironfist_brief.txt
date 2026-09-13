@@ -1,0 +1,64 @@
+Iron Fist: Tournament of Shadows — Fighting Game Clipping Campaign
+
+WHAT TO DO
+- Post short-form vertical clips (10-45 seconds) to TikTok, Instagram Reels, and YouTube Shorts showcasing the most hype-inducing fighting game moments from Iron Fist: Tournament of Shadows.
+- Feature moments: perfect rounds, dramatic reversals, ultra-combo finishes, and frame-perfect parries.
+- Clips should feel tense and rewarding. Emphasise skill expression, close calls, and crowd-pleasing finishes.
+
+CONTENT FOLDER RULE
+- Use only footage from the official Crimson Blade Interactive MediaSilo folder titled "IronFist_Tournament_Clips".
+- Footage is supplied as 1080p60 (1920x1080, 60 fps, progressive scan). No 4K or HDR source.
+- The source has two audio tracks: track 0 = game audio (sound effects + announcer), track 1 = background lounge music (licensed). You must use track 0 only.
+
+TAGGING REQUIREMENT
+- Every post must include @ironfistgame in the caption.
+- A second tag is optional but if used must be @crimsonbladegames.
+
+CAPTION GUIDELINES
+- Each caption must include the exact phrase: "Step into the arena — Iron Fist: Tournament of Shadows, out now"
+- Captions must be in English.
+
+FTC DISCLOSURE
+- Allowed disclosure hashtags: #Ad, #Advertisement, #Sponsored
+- Exactly one must appear. Placement: immediately after the required phrase, separated by a single line break.
+
+LOGO WATERMARK REQUIREMENT
+- The Iron Fist logo must appear on screen for the full duration of every clip.
+- The logo must be placed in the top-right corner of the frame.
+- The logo must be at least 100px wide at 1080x1920 resolution.
+- The logo file is provided as "ironfist_logo.png" in the MediaSilo folder.
+
+ON-SCREEN TEXT
+- Required phrase: "Out Now"
+- Allowed close variations: "Available Now", "Play Today", "Download Free"
+- The on-screen text must be visible for at least 2 seconds per clip.
+- Text must not overlap with the game's health bars, super meter, or timer HUD elements in the top half of the screen.
+- The text must not overlap with the logo watermark.
+
+EDITING GUIDELINES
+- Centre-crop to 9:16 vertical format at 1080x1920.
+- Source is 60 fps progressive. Output must be 60 fps (do not drop to 30).
+- Do not alter playback speed. No slow motion. No speed ramping.
+- Original game audio from track 0 only. Track 1 (licensed music) must be excluded.
+- In-game voice chat, if present, must be muted.
+- No colour grading, filters, or visual effects beyond the required overlay.
+- No additional text, stickers, or emoji overlays.
+
+REQUIREMENTS
+- Clip length: 10-45 seconds inclusive.
+- Language: English. Game UI may be in any language.
+- Posts must remain live for a minimum of 45 days.
+- Likes and engagement metrics must be visible.
+- Maximum of 5 reposts per clip across all platforms combined.
+- No paid boosting or promoted posts.
+
+NOT ALLOWED
+- No footage from other fighting games.
+- No track 1 audio (licensed lounge music).
+- No voice chat audio.
+- No slow motion or speed changes of any kind.
+- No personal watermarks, creator branding, or channel logos.
+- No profanity or toxic language visible in chat overlays.
+- No glitching, infinite combos, or exploit footage.
+- No footage from modes marked "Beta" or "Training" in the source folder.
+- No more than 3 clips may be posted from the same matchup in the source footage.

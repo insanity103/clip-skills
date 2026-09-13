@@ -1,0 +1,27 @@
+{
+ "caption": {
+  "required_phrases": [
+   "Squad up and drop into Stormfall — available now on all platforms"
+  ],
+  "required_tags": [
+   "@playstormfall",
+   "@apexforgestudios"
+  ],
+  "tags_position": "start",
+  "disclosure": {
+   "options": [
+    "#Ad",
+    "#Sponsored",
+    "#PaidPartnership"
+   ],
+   "own_line": false,
+   "only_one": true
+  },
+  "max_extra_hashtags": 3,
+  "language": "en"
+ },
+ "duration": {
+  "min": 10,
+  "max": 60
+ }
+}

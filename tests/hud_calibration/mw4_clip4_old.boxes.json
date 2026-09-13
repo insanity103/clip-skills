@@ -1,0 +1,49 @@
+{
+ "canvas": [
+  1080,
+  1920
+ ],
+ "elements": [
+  {
+   "id": "hook",
+   "type": "measured",
+   "box": [
+    354,
+    192,
+    726,
+    239
+   ]
+  },
+  {
+   "id": "title",
+   "type": "measured",
+   "box": [
+    264,
+    245,
+    819,
+    335
+   ]
+  },
+  {
+   "id": "sub",
+   "type": "measured",
+   "box": [
+    356,
+    358,
+    720,
+    426
+   ]
+  },
+  {
+   "id": "logo",
+   "type": "measured",
+   "box": [
+    380,
+    1340,
+    699,
+    1469
+   ]
+  }
+ ],
+ "source": "measured from mw4_clip4.png (alpha>200)"
+}
