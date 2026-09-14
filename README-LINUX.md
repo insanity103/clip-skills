@@ -6,7 +6,7 @@
    - Arch: `sudo pacman -S python ffmpeg ttf-dejavu`
 2. **Unpack and install** (about 2 minutes):
    `tar xzf clip-skills-linux.tar.gz -C ~ && bash ~/clip-skills/install.sh`
-   It copies the four skills into `~/.claude/skills`, sets up `~/.venvs/clipkit`, and ends with a self-test.
+   It copies the seven skills into `~/.claude/skills`, sets up `~/.venvs/clipkit`, and ends with a self-test.
    You want the last line to read `all checks passed`.
 3. **Optional full test suite** (10-20 minutes): `bash ~/clip-skills/tests/run_tests.sh`
 4. **Resume the work in Claude Code:** run `claude` inside `~/clip-skills` and say
