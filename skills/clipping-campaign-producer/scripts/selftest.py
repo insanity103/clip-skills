@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check this machine can run the six clip skills: tools, Python packages, fonts, then one tiny end-to-end run.
+"""Check this machine can run the seven clip skills: tools, Python packages, fonts, then one tiny end-to-end run.
 
   ~/.venvs/clipkit/bin/python ~/.claude/skills/clipping-campaign-producer/scripts/selftest.py
 
@@ -27,6 +27,7 @@ SCRIPTS = {
     "caption": ("clipping-campaign-producer", "check_caption.py"),
     "mix": ("clip-audio-mixer", "mix_audio.py"),
     "cover": ("clip-cover-picker", "pick_cover.py"),
+    "stylize": ("clip-stylizer", "apply_style.py"),
 }
 S = {k: os.path.join(SKILLS, skill, "scripts", name) for k, (skill, name) in SCRIPTS.items()}
 FIX = {
@@ -37,7 +38,7 @@ FIX = {
               f"Debian/Ubuntu may first need: sudo apt install python3-venv)",
     "font": "Debian/Ubuntu: sudo apt install fonts-dejavu-core | Fedora: sudo dnf install dejavu-sans-fonts | "
             "Arch: sudo pacman -S ttf-dejavu",
-    "skills": "copy all six skill folders into ~/.claude/skills (the Linux package's install.sh does this)",
+    "skills": "copy all seven skill folders into ~/.claude/skills (the Linux package's install.sh does this)",
 }
 results = []
 
@@ -72,7 +73,7 @@ def main():
     print(f"clip skills self-test - {sys.platform}, Python {sys.version.split()[0]}, skills in {SKILLS}")
     report(sys.version_info >= (3, 8), "python 3.8 or newer", sys.version.split()[0], "install Python 3.8+")
     missing = [os.path.relpath(p, SKILLS) for p in S.values() if not os.path.exists(p)]
-    report(not missing, "all six skills installed", ", ".join(missing), FIX["skills"])
+    report(not missing, "all seven skills installed", ", ".join(missing), FIX["skills"])
     try:
         import PIL
         report(True, "pillow", PIL.__version__)
@@ -149,6 +150,11 @@ def main():
             r = run([sys.executable, S["cover"], final, "--out-dir", covers, "--top", "2", "--fps", "3"])
             ok = r.returncode == 0 and len(os.listdir(covers)) == 2 if os.path.isdir(covers) else False
             report(ok, "clip-cover-picker: pick_cover.py", tail(r) if r.returncode else "")
+
+            styled = os.path.join(td, "styled.mp4")
+            r = run([sys.executable, S["stylize"], "--clip", final, "--out", styled])
+            report(r.returncode == 0 and os.path.exists(styled), "clip-stylizer: apply_style.py",
+                   tail(r) if r.returncode else "")
 
         camp, cap = os.path.join(td, "campaign.json"), os.path.join(td, "caption.txt")
         with open(camp, "w") as f:

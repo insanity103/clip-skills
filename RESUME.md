@@ -4,15 +4,18 @@ Read this first. Everything the next session needs is in this folder; nothing de
 
 ## Where things stand
 
-Five Claude Code skills for turning sponsor gameplay footage into vertical clips for paid clipping campaigns
-(TikTok, YouTube Shorts, Instagram Reels). Built, tested and installed on the Mac.
+Seven Claude Code skills for turning sponsor gameplay footage into vertical clips for paid clipping campaigns
+(TikTok, YouTube Shorts, Instagram Reels), plus organic (non-sponsored) format knowledge and a stylizer for
+non-brief content. Built, tested and installed on the Mac.
 
 | Skill | What it does |
 |---|---|
-| gameplay-clip-cutter | finds the action in long footage by loudness; blocks dead air and cuts that jump between players |
+| gameplay-clip-cutter | finds the action in long footage by loudness; blocks dead air and cuts that jump between players; `references/organic_formats.md` documents when this pipeline doesn't apply |
 | vertical-clip-renderer | full-frame 9:16 renders only (never letterbox); push-in, overlay, `--fps`; warns on low-resolution sources |
 | clip-overlay-builder | required text and logo overlay; platform safe zones; collisions with the game's own HUD (`hud_map.py`) |
 | clip-audio-mixer | music bed and/or timed SFX on top of a rendered clip, only for briefs that allow added audio; sidechain ducking, loudness-normalized |
+| clip-cover-picker | scores candidate frames from a rendered clip for sharpness/exposure to pick a TikTok/Shorts/Reels cover still |
+| clip-stylizer | vertical echo/ghost + saturation/posterize filter for organic (non-sponsored) clips; never for briefed content |
 | clipping-campaign-producer | brief → `campaign.json`; caption checker; pre-post QA gate; originality and posting rules; `selftest.py` |
 
 Verified on the Mac (macOS, Python 3.14, ffmpeg 9.0): all 116 tests pass against the installed skills; framing
@@ -107,7 +110,7 @@ README-LINUX.md    install steps for Linux
 install.sh         installs the skills, venv and runs the self-test
 FINDINGS.md        the review: what was flagged, why, with evidence
 brief.txt          the MW4 campaign brief
-skills/            the five skills (what install.sh copies)
+skills/            the seven skills (what install.sh copies)
 tests/             116 tests, fixtures, 4 other-genre test briefs, run_tests.sh, hud_calibration notes
 evidence/          images for the review page
 analysis/          signal timelines of the MW4 sources and clips (for re-validating edits)

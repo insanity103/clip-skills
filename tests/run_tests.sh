@@ -16,6 +16,7 @@ export CHECK_CAPTION_SCRIPT="$SK/clipping-campaign-producer/scripts/check_captio
 export QA_CLIP_SCRIPT="$SK/clipping-campaign-producer/scripts/qa_clip.py"
 export MIX_AUDIO_SCRIPT="$SK/clip-audio-mixer/scripts/mix_audio.py"
 export PICK_COVER_SCRIPT="$SK/clip-cover-picker/scripts/pick_cover.py"
+export APPLY_STYLE_SCRIPT="$SK/clip-stylizer/scripts/apply_style.py"
 export SELFTEST_SCRIPT="$SK/clipping-campaign-producer/scripts/selftest.py"
 export CLIP_CUTTER_SCRIPTS="$SK/gameplay-clip-cutter/scripts"
 
