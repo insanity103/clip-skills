@@ -14,6 +14,8 @@ export PREPARE_LOGO_SCRIPT="$SK/clip-overlay-builder/scripts/prepare_logo.py"
 export HUD_MAP_SCRIPT="$SK/clip-overlay-builder/scripts/hud_map.py"
 export CHECK_CAPTION_SCRIPT="$SK/clipping-campaign-producer/scripts/check_caption.py"
 export QA_CLIP_SCRIPT="$SK/clipping-campaign-producer/scripts/qa_clip.py"
+export MIX_AUDIO_SCRIPT="$SK/clip-audio-mixer/scripts/mix_audio.py"
+export PICK_COVER_SCRIPT="$SK/clip-cover-picker/scripts/pick_cover.py"
 export SELFTEST_SCRIPT="$SK/clipping-campaign-producer/scripts/selftest.py"
 export CLIP_CUTTER_SCRIPTS="$SK/gameplay-clip-cutter/scripts"
 

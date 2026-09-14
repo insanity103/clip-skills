@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install the four clip skills for Claude Code (Linux or macOS), set up their Python environment, then self-test.
+# Install the six clip skills for Claude Code (Linux or macOS), set up their Python environment, then self-test.
 #   bash ~/clip-skills/install.sh
 # Existing copies of these skills are moved to ~/.claude/skills-backup/, never deleted.
 set -euo pipefail
@@ -8,7 +8,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 BACKUP="$HOME/.claude/skills-backup"
 VENV="${CLIPKIT_VENV:-$HOME/.venvs/clipkit}"
-SKILLS=(gameplay-clip-cutter vertical-clip-renderer clip-overlay-builder clipping-campaign-producer)
+SKILLS=(gameplay-clip-cutter vertical-clip-renderer clip-overlay-builder clip-audio-mixer clip-cover-picker clipping-campaign-producer)
 
 missing=()
 for tool in python3 ffmpeg ffprobe; do
