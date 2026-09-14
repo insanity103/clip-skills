@@ -11,7 +11,7 @@ Worked example: `examples/mw4/campaign.json`.
 | `platforms` | list of `tiktok`, `reels`, `shorts` | you | run `check_caption.py --platform` once per platform |
 | `source_rule` | string | you | where footage may come from (usually: the official folder only) |
 | `duration.min`, `duration.max` | seconds | `qa_clip.py` | clip length limits from the brief |
-| `audio` | `"original_only"` or free text | you | the renderer never adds music; flag licensed music in game audio by ear |
+| `audio` | `"original_only"` or free text | you | the renderer never adds music; flag licensed music in game audio by ear. Anything other than `"original_only"` — a brief that allows or supplies added music/SFX — is **clip-audio-mixer**'s job, run after the renderer |
 | `language` | `"en"` etc. | you | language of the post as a whole |
 | `caption.required_phrases` | list of strings | `check_caption.py` | must appear exactly, case and punctuation included |
 | `caption.required_tags` | list of `@handles` | `check_caption.py` | whole handles, case-insensitive |
