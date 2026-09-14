@@ -27,6 +27,7 @@ P=~/.claude/skills/clipping-campaign-producer/scripts
 2. **Footage and logo:** only the brief's official sources. Prepare the logo with **clip-overlay-builder**.
 3. **Cut** — **REQUIRED SUB-SKILL: gameplay-clip-cutter.** Validate every EDL; never reuse beats an earlier clip in the campaign used.
 4. **Overlay and render** — **REQUIRED SUB-SKILLS: clip-overlay-builder, vertical-clip-renderer.** Draft without overlay → `hud_map.py` → final with overlay (add `--fps` when `campaign.json` sets `render.fps`).
+   If `campaign.json`'s `audio` field is anything other than `"original_only"` — the brief allows or supplies added music/SFX — run **clip-audio-mixer** on the rendered clip next; otherwise skip it.
 5. **QA gate — run on every clip, against every clip already made for this campaign:**
    ```bash
    $PY $P/qa_clip.py new1.mp4 new2.mp4 --campaign campaign.json --overlay-spec overlay.json \
