@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check this machine can run the four clip skills: tools, Python packages, fonts, then one tiny end-to-end run.
+"""Check this machine can run the seven clip skills: tools, Python packages, fonts, then one tiny end-to-end run.
 
   ~/.venvs/clipkit/bin/python ~/.claude/skills/clipping-campaign-producer/scripts/selftest.py
 
@@ -25,6 +25,9 @@ SCRIPTS = {
     "hud": ("clip-overlay-builder", "hud_map.py"),
     "qa": ("clipping-campaign-producer", "qa_clip.py"),
     "caption": ("clipping-campaign-producer", "check_caption.py"),
+    "mix": ("clip-audio-mixer", "mix_audio.py"),
+    "cover": ("clip-cover-picker", "pick_cover.py"),
+    "stylize": ("clip-stylizer", "apply_style.py"),
 }
 S = {k: os.path.join(SKILLS, skill, "scripts", name) for k, (skill, name) in SCRIPTS.items()}
 FIX = {
@@ -35,7 +38,7 @@ FIX = {
               f"Debian/Ubuntu may first need: sudo apt install python3-venv)",
     "font": "Debian/Ubuntu: sudo apt install fonts-dejavu-core | Fedora: sudo dnf install dejavu-sans-fonts | "
             "Arch: sudo pacman -S ttf-dejavu",
-    "skills": "copy all four skill folders into ~/.claude/skills (the Linux package's install.sh does this)",
+    "skills": "copy all seven skill folders into ~/.claude/skills (the Linux package's install.sh does this)",
 }
 results = []
 
@@ -70,7 +73,7 @@ def main():
     print(f"clip skills self-test - {sys.platform}, Python {sys.version.split()[0]}, skills in {SKILLS}")
     report(sys.version_info >= (3, 8), "python 3.8 or newer", sys.version.split()[0], "install Python 3.8+")
     missing = [os.path.relpath(p, SKILLS) for p in S.values() if not os.path.exists(p)]
-    report(not missing, "all four skills installed", ", ".join(missing), FIX["skills"])
+    report(not missing, "all seven skills installed", ", ".join(missing), FIX["skills"])
     try:
         import PIL
         report(True, "pillow", PIL.__version__)
@@ -134,6 +137,24 @@ def main():
             v = next(s for s in probe["streams"] if s["codec_type"] == "video")
             report((v["width"], v["height"], v["codec_name"]) == (1080, 1920, "h264"), "final clip is 1080x1920 H.264",
                    f"{v['width']}x{v['height']} {v['codec_name']}")
+
+        if os.path.exists(final):
+            music, mixed = os.path.join(td, "music.wav"), os.path.join(td, "mixed.mp4")
+            r = run(["ffmpeg", "-v", "error", "-nostdin", "-y", "-f", "lavfi", "-i", "sine=frequency=220:duration=6",
+                     music])
+            r = run([sys.executable, S["mix"], "--clip", final, "--music", music, "--duck", "--out", mixed])
+            report(r.returncode == 0 and os.path.exists(mixed), "clip-audio-mixer: mix_audio.py",
+                   tail(r) if r.returncode else "")
+
+            covers = os.path.join(td, "covers")
+            r = run([sys.executable, S["cover"], final, "--out-dir", covers, "--top", "2", "--fps", "3"])
+            ok = r.returncode == 0 and len(os.listdir(covers)) == 2 if os.path.isdir(covers) else False
+            report(ok, "clip-cover-picker: pick_cover.py", tail(r) if r.returncode else "")
+
+            styled = os.path.join(td, "styled.mp4")
+            r = run([sys.executable, S["stylize"], "--clip", final, "--out", styled])
+            report(r.returncode == 0 and os.path.exists(styled), "clip-stylizer: apply_style.py",
+                   tail(r) if r.returncode else "")
 
         camp, cap = os.path.join(td, "campaign.json"), os.path.join(td, "caption.txt")
         with open(camp, "w") as f:
