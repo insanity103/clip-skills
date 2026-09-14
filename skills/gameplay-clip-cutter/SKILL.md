@@ -55,6 +55,7 @@ S=~/.claude/skills/gameplay-clip-cutter/scripts
 
 - **The game is not a shooter, or loudness seems to miss the action** (racing engines, MOBA ability spam, horror tension, fighting-game footsies): read `references/genre_playbook.md` before trusting the ranking.
 - **A verdict looks wrong, or you want to change a threshold:** read `references/calibration.md` first — the thresholds encode real approved and flagged outcomes.
+- **A brief doesn't specify clip length, cut frequency, or on-screen text placement:** read `references/platform_retention.md` — general 2026 short-form editing research (length, hooks, pacing, safe zones) to fall back on. Not calibrated like `calibration.md` or `mw4_case_study.md` — defer to those and to `qa_clip.py`/`--check-safe` where they conflict.
 
 ## Common mistakes
 
