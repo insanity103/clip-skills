@@ -6,8 +6,3 @@ __pycache__/
 # Editor/OS cruft
 .DS_Store
 ._*
-
-# Scratch media dropped in for a session - not repo content
-clips-inbox/*
-!clips-inbox/.gitkeep
-!clips-inbox/README.md
