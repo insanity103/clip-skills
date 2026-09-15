@@ -39,6 +39,7 @@ P=~/.claude/skills/clipping-campaign-producer/scripts
    `$PY $P/check_caption.py caption.txt --campaign campaign.json --platform tiktok` (Shorts: add `--title "..."`). Exit 1 = fix it. Engagement bait ("like for like", "tag a friend") is flagged.
 8. **Cover frame (optional)** — run **clip-cover-picker** on each final to give the user a few candidate cover stills instead of leaving the platform's default (often a hard cut mid-motion).
 9. **Hand over:** files in the user's folder (move replaced versions into a `previous/` subfolder — never delete); every caption and title written out in chat as copy-paste blocks; the posting rules from `references/originality.md`.
+10. **After the user posts (optional):** log each clip with **campaign-tracker** so the 30-day-live deadline, repost count, and engagement rate against the brief's minimum are tracked past the moment of posting, not just handed over as text.
 
 ## Rules
 

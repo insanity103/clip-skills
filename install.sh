@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
-# Install the seven clip skills for Claude Code (Linux or macOS), set up their Python environment, then self-test.
+# Install the ten clip skills for Claude Code (Linux or macOS), set up their Python environment, then self-test.
 #   bash ~/clip-skills/install.sh
 # Existing copies of these skills are moved to ~/.claude/skills-backup/, never deleted.
+# clip-subject-mask and clip-subject-tracker need a SEPARATE, much heavier venv (PyTorch + a multi-hundred-MB
+# to multi-GB model checkpoint) - this script copies their skill files like any other but does NOT set that
+# venv up; see each skill's own SKILL.md Setup section and run it yourself when you actually want to use them.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 BACKUP="$HOME/.claude/skills-backup"
 VENV="${CLIPKIT_VENV:-$HOME/.venvs/clipkit}"
-SKILLS=(gameplay-clip-cutter vertical-clip-renderer clip-overlay-builder clip-audio-mixer clip-cover-picker clip-stylizer clipping-campaign-producer)
+SKILLS=(gameplay-clip-cutter vertical-clip-renderer clip-overlay-builder clip-audio-mixer clip-cover-picker clip-stylizer clip-subject-mask clip-subject-tracker campaign-tracker clipping-campaign-producer)
 
 missing=()
 for tool in python3 ffmpeg ffprobe; do
@@ -42,7 +45,7 @@ if [ ! -x "$VENV/bin/python" ]; then
     exit 1
   fi
 fi
-"$VENV/bin/python" -m pip install --quiet --disable-pip-version-check --upgrade pillow
+"$VENV/bin/python" -m pip install --quiet --disable-pip-version-check --upgrade pillow numpy openpyxl
 echo "python environment ready: $VENV"
 echo
 

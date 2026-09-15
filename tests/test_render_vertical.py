@@ -396,5 +396,59 @@ class Preview(Asserts):
         self.assertColor(img, (160, 1500), "white")
 
 
+class CropTrack(Asserts):
+    def track_file(self, points):
+        path = os.path.join(TMP, f"track-{abs(hash(tuple((p['t'], p['x']) for p in points)))}.json")
+        with open(path, "w") as f:
+            json.dump(points, f)
+        return path
+
+    def test_crop_follows_the_track_from_one_band_to_another(self):
+        out = os.path.join(TMP, "track_sweep.mp4")
+        track = self.track_file([{"t": 0, "x": -656}, {"t": 2, "x": 656}])
+        proc = render("--src", os.path.join(TMP, "banded.mp4"), "--edl", "0:2", "--zoom", "0",
+                      "--crop-track", track, "--quality", "draft", "--out", out)
+        self.assertRendered(proc, out)
+        self.assertColor(frame_at(out, 0.05), (540, 960), "blue")
+        self.assertColor(frame_at(out, 1.95), (540, 960), "red")
+
+    def test_track_holds_before_its_first_point_and_after_its_last(self):
+        # first and last points deliberately differ so a hold-at-the-wrong-end bug shows up as a
+        # color mismatch instead of silently passing (both landing on the same color either way).
+        out = os.path.join(TMP, "track_hold.mp4")
+        track = self.track_file([{"t": 0.5, "x": -656}, {"t": 1.5, "x": 656}])
+        proc = render("--src", os.path.join(TMP, "banded.mp4"), "--edl", "0:2", "--zoom", "0",
+                      "--crop-track", track, "--quality", "draft", "--out", out)
+        self.assertRendered(proc, out)
+        self.assertColor(frame_at(out, 0.05), (540, 960), "blue")   # before t=0.5: holds at the FIRST point (-656)
+        self.assertColor(frame_at(out, 1.95), (540, 960), "red")    # after t=1.5: holds at the LAST point (656)
+
+    def test_track_point_past_the_frame_edge_is_clamped_not_an_error(self):
+        out = os.path.join(TMP, "track_clamped.mp4")
+        track = self.track_file([{"t": 0, "x": 5000}, {"t": 2, "x": 5000}])
+        proc = render("--src", os.path.join(TMP, "banded.mp4"), "--edl", "0:2", "--zoom", "0",
+                      "--crop-track", track, "--quality", "draft", "--out", out)
+        self.assertRendered(proc, out)
+        self.assertIn("clamped", proc.stderr)
+        self.assertColor(frame_at(out, 0.5), (40, 960), "red")
+
+    def test_track_point_outside_the_beat_is_rejected(self):
+        out = os.path.join(TMP, "track_bad.mp4")
+        track = self.track_file([{"t": 0, "x": 0}, {"t": 5, "x": 656}])
+        proc = render("--src", os.path.join(TMP, "banded.mp4"), "--edl", "0:2", "--zoom", "0",
+                      "--crop-track", track, "--quality", "draft", "--out", out)
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("outside the beat", proc.stderr)
+        self.assertFalse(os.path.exists(out))
+
+    def test_crop_track_with_more_than_one_edl_beat_is_rejected(self):
+        out = os.path.join(TMP, "track_multi_beat.mp4")
+        track = self.track_file([{"t": 0, "x": 0}, {"t": 1, "x": 656}])
+        proc = render("--src", os.path.join(TMP, "banded.mp4"), "--edl", "0:1,1:1", "--zoom", "0",
+                      "--crop-track", track, "--quality", "draft", "--out", out)
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("one --edl beat", proc.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()

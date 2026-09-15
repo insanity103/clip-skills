@@ -16,5 +16,6 @@
     "required_text_any": [["MW4 Open Beta", "This Weekend"], ["MW4 Beta Weekend"]],
     "logo_required": true
   },
-  "posting": {"min_days_live": 30, "likes_visible": true, "max_reposts": 5, "paid_boosting": false}
+  "posting": {"min_days_live": 30, "likes_visible": true, "max_reposts": 5, "paid_boosting": false,
+              "min_engagement_rate": 0.002}
 }

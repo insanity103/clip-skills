@@ -6,6 +6,7 @@ The frame is always filled with footage. Never letterbox or blur-fill: that is w
   render_vertical.py --src SRC.mp4 --edl "91.5:4,125.5:2.5:40,133:9" --overlay ov.png --out clip.mp4
   render_vertical.py --edit clip.json            # beats from several sources, per-beat crop offsets
   render_vertical.py --jobs batch.json           # several clips, strictly one after another
+  render_vertical.py --src SRC.mp4 --edl "91.5:4" --crop-track track.json --out clip.mp4   # crop follows a subject
   render_vertical.py ... --preview-at 6.5 --out frame.png      # one still at output time 6.5s, no encode
 
 EDL: comma-separated start:dur[:x] in source seconds. x shifts that beat's crop right (+) or left (-) in
@@ -14,6 +15,13 @@ Edit JSON: {"out": "clip.mp4", "overlay": "ov.png", "zoom": 0.08, "x": 0,
             "beats": [{"src": "a.mp4", "start": 91.5, "dur": 4, "x": 35}, ...]}
 Relative paths resolve against the JSON file. Jobs JSON: {"jobs": [edit, edit, ...]}.
 In --src mode --zoom/--x/--overlay apply; in --edit/--jobs mode the JSON carries them.
+
+--crop-track FILE.json (--src mode) or a "track" field on a beat (--edit/--jobs mode) replaces that
+beat's constant x with a moving one, linearly interpolated between keyframes and held constant before
+the first / after the last: [{"t": 0.0, "x": 0}, {"t": 2.0, "x": 120}, ...] - t is seconds into the
+BEAT (0 at its start), x is the same source-pixel offset --x/EDL use. Built by clip-subject-tracker
+from a tracked subject; keep it coarse (every 0.3-0.5s, not every frame) - a per-frame track is noisy
+and produces an unreadably long filter expression for no visual benefit at this frame rate.
 
 --quality final   x264 medium crf 18: the upload copy
 --quality draft   hardware (VideoToolbox) or x264 veryfast: several times faster, for checking an edit
@@ -59,14 +67,50 @@ def canvas(zoom):
     return (even(OUT_W * (1 + zoom)), even(OUT_H * (1 + zoom))) if zoom > 0 else (OUT_W, OUT_H)
 
 
-def crop_box(w, h, x_off):
+def crop_dims(w, h):
     if w * 16 >= h * 9:
         cw, ch = even(round(h * 9 / 16)), even(h)
     else:
         cw, ch = even(w), even(round(w * 16 / 9))
+    return cw, ch
+
+
+def crop_box(w, h, x_off):
+    cw, ch = crop_dims(w, h)
     want = (w - cw) // 2 + x_off
     cx = min(max(want, 0), w - cw)
     return cw, ch, cx, (h - ch) // 2, cx != want
+
+
+def crop_box_track(w, h, track):
+    """A piecewise-linear ffmpeg x expression in t (seconds into the beat) instead of one constant cx."""
+    cw, ch = crop_dims(w, h)
+    lo, hi = 0, w - cw
+    pts, clamped = [], False
+    for p in sorted(track, key=lambda p: p["t"]):
+        want = (w - cw) // 2 + p["x"]
+        cx = min(max(want, 0), hi)
+        clamped = clamped or cx != want
+        pts.append((p["t"], cx))
+    expr = f"{pts[-1][1]}"
+    for (t0, x0), (t1, x1) in reversed(list(zip(pts, pts[1:]))):
+        seg = f"({x0}+({x1}-{x0})*(t-{t0:.3f})/{(t1 - t0):.3f})" if t1 != t0 else f"{x1}"
+        expr = f"if(lt(t\\,{t1:.3f})\\,{seg}\\,{expr})"
+    expr = f"if(lt(t\\,{pts[0][0]:.3f})\\,{pts[0][1]}\\,{expr})"
+    expr = f"clip({expr}\\,{lo}\\,{hi})"
+    return cw, ch, expr, (h - ch) // 2, clamped
+
+
+def track_x_at(track, t):
+    pts = sorted(track, key=lambda p: p["t"])
+    if t <= pts[0]["t"]:
+        return pts[0]["x"]
+    if t >= pts[-1]["t"]:
+        return pts[-1]["x"]
+    for (t0, x0), (t1, x1) in zip(pts, pts[1:]):
+        if t0 <= t <= t1:
+            return x0 if t1 == t0 else x0 + (x1 - x0) * (t - t0) / (t1 - t0)
+    return pts[-1]["x"]
 
 
 def sharpen_amount(upscale):
@@ -103,7 +147,19 @@ def load_edit(spec, base):
     return {"out": res(spec["out"]), "overlay": res(spec.get("overlay")),
             "zoom": float(spec.get("zoom", DEFAULT_ZOOM)), "fps": float(spec["fps"]) if spec.get("fps") else None,
             "beats": [{"src": res(b["src"]), "start": float(b["start"]), "dur": float(b["dur"]),
-                       "x": int(b.get("x", spec.get("x", 0)))} for b in spec["beats"]]}
+                       "x": int(b.get("x", spec.get("x", 0))),
+                       "track": [{"t": float(p["t"]), "x": int(p["x"])} for p in b["track"]] if b.get("track")
+                       else None} for b in spec["beats"]]}
+
+
+def load_track_file(path, dur):
+    track = json.load(open(path))
+    if not track:
+        die(f"--crop-track {path} is empty")
+    for p in track:
+        if not 0 <= p["t"] <= dur + 0.05:
+            die(f"--crop-track point t={p['t']:g} is outside the beat (0-{dur:.2f}s)")
+    return [{"t": float(p["t"]), "x": int(p["x"])} for p in track]
 
 
 def check(edit):
@@ -119,6 +175,12 @@ def check(edit):
         if b["dur"] <= 0 or b["start"] < 0 or b["start"] + b["dur"] > m["duration"] + 0.05:
             die(f"beat {n} ({b['start']:g}:{b['dur']:g}) is outside {os.path.basename(b['src'])} "
                 f"(0-{m['duration']:.2f}s)")
+        if b.get("track"):
+            if len(b["track"]) < 1:
+                die(f"beat {n}: --crop-track has no points")
+            for p in b["track"]:
+                if not 0 <= p["t"] <= b["dur"] + 0.05:
+                    die(f"beat {n}: crop-track point t={p['t']:g} is outside the beat (0-{b['dur']:.2f}s)")
     if edit["overlay"]:
         if not os.path.exists(edit["overlay"]):
             die(f"overlay not found: {edit['overlay']}")
@@ -146,15 +208,20 @@ def build_graph(edit, metas, rate, fps):
     parts, pads, ups = [], [], []
     total = sum(b["dur"] for b in edit["beats"])
     for i, (b, m) in enumerate(zip(edit["beats"], metas)):
-        cw, ch, cx, cy, clamped = crop_box(m["w"], m["h"], b["x"])
+        if b.get("track"):
+            cw, ch, cx, cy, clamped = crop_box_track(m["w"], m["h"], b["track"])
+        else:
+            cw, ch, cx, cy, clamped = crop_box(m["w"], m["h"], b["x"])
         if clamped:
-            print(f"warning: beat {i + 1} crop offset {b['x']} clamped to the frame edge", file=sys.stderr)
+            print(f"warning: beat {i + 1} crop offset clamped to the frame edge somewhere in its range",
+                  file=sys.stderr)
         ups.append(OUT_W / cw)
         if OUT_W / cw > 2.0:
             print(f"warning: beat {i + 1} upscales {OUT_W / cw:.1f}x ({m['w']}x{m['h']} source) - expect a soft clip; "
                   f"TikTok and Instagram demote blurry, low-resolution video. Use a 1080p-or-better source.",
                   file=sys.stderr)
-        parts.append(f"[{i}:v]setpts=PTS-STARTPTS,fps={rate},crop={cw}:{ch}:{cx}:{cy},"
+        x_arg = f"'{cx}'" if b.get("track") else str(cx)
+        parts.append(f"[{i}:v]setpts=PTS-STARTPTS,fps={rate},crop={cw}:{ch}:{x_arg}:{cy},"
                      f"scale={zw}:{zh}:flags=lanczos,setsar=1,format=yuv420p[v{i}]")
         d, fade = b["dur"], min(0.06, b["dur"] / 4)
         head = f"[{i}:a]asetpts=PTS-STARTPTS," if m["audio"] else "anullsrc=r=48000:cl=stereo,"
@@ -250,7 +317,12 @@ def preview(edit, t, out_png):
     zoom = edit["zoom"]
     zw, zh = canvas(zoom)
     z = 1 + zoom * t / total
-    cw, ch, cx, cy, _ = crop_box(m["w"], m["h"], b["x"])
+    if b.get("track"):
+        cw, ch = crop_dims(m["w"], m["h"])
+        x_off = round(track_x_at(b["track"], t - acc))
+        _, _, cx, cy, _ = crop_box(m["w"], m["h"], x_off)
+    else:
+        cw, ch, cx, cy, _ = crop_box(m["w"], m["h"], b["x"])
     amt = sharpen_amount(OUT_W / cw)
     chain = (f"[0:v]crop={cw}:{ch}:{cx}:{cy},scale={zw}:{zh}:flags=lanczos,crop=w=iw/{z:.5f}:h=ih/{z:.5f},"
              f"scale={OUT_W}:{OUT_H}:flags=lanczos" + (f",unsharp=5:5:{amt}:5:5:0.0" if amt else "") + ",setsar=1")
@@ -277,6 +349,8 @@ def main():
     ap.add_argument("--overlay", help="full-frame 1080x1920 transparent PNG (with --src)")
     ap.add_argument("--out", help="output .mp4 (or .png with --preview-at)")
     ap.add_argument("--x", type=int, default=0, help="default crop offset in source px (with --src)")
+    ap.add_argument("--crop-track", help="JSON keyframe list [{t,x},...] - the crop follows this instead of --x "
+                                          "(with --src; single beat only)")
     ap.add_argument("--zoom", type=float, default=DEFAULT_ZOOM, help="push-in amount over the clip, 0 = none")
     ap.add_argument("--fps", type=float, help="output frame rate when a brief requires one (default: the source's, max 60)")
     ap.add_argument("--quality", choices=["final", "draft"], default="final")
@@ -287,8 +361,12 @@ def main():
     if args.src:
         if not args.edl or not args.out:
             die("--src needs --edl and --out")
-        edits = [{"out": args.out, "overlay": args.overlay, "zoom": args.zoom, "fps": None,
-                  "beats": parse_edl(args.edl, args.src, args.x)}]
+        beats = parse_edl(args.edl, args.src, args.x)
+        if args.crop_track:
+            if len(beats) != 1:
+                die("--crop-track needs exactly one --edl beat; use --edit with a per-beat \"track\" for more")
+            beats[0]["track"] = load_track_file(args.crop_track, beats[0]["dur"])
+        edits = [{"out": args.out, "overlay": args.overlay, "zoom": args.zoom, "fps": None, "beats": beats}]
     elif args.edit:
         spec = json.load(open(args.edit))
         edits = [load_edit(spec, os.path.dirname(os.path.abspath(args.edit)))]

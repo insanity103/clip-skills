@@ -21,7 +21,7 @@ R=~/.claude/skills/vertical-clip-renderer/scripts/render_vertical.py
 
 1. **Draft without overlay** (VideoToolbox on macOS, x264 veryfast on Linux; also the input `hud_map.py` needs):
    `$PY $R --src "SRC.mp4" --edl "91.5:4,125.5:2.5,133:9" --x 35 --quality draft --out clip_draft.mp4`
-2. **Check the crop at the moments that matter:** add `--preview-at 9.5 --out frame.png` for one full-resolution still at output time 9.5 s (no encode). Shift `--x` (source pixels, + moves right) until the action is inside; a single beat's offset goes in the EDL as `start:dur:x`.
+2. **Check the crop at the moments that matter:** add `--preview-at 9.5 --out frame.png` for one full-resolution still at output time 9.5 s (no encode). Shift `--x` (source pixels, + moves right) until the action is inside; a single beat's offset goes in the EDL as `start:dur:x`. For a subject that moves enough within one beat that no fixed `--x` frames it well, `--crop-track track.json` follows a moving offset instead - built by **clip-subject-tracker** (SAM 2), not something to hand-write for anything longer than a couple of keyframes.
 3. **Read stderr.** `upscales N.Nx` means the source is below 1080p for this crop: the clip will be soft, and platforms demote low-resolution video. Find a better source before posting.
 4. **Final with overlay:** the same edit with `--overlay overlay.png --quality final --out clip.mp4`. If the brief sets a frame rate, add `--fps 30` (or `"fps": 30` in edit JSON); otherwise the source rate is kept, up to 60.
 5. **Several clips:** put the edits in a jobs file and run `--jobs batch.json`; they render one after another.
