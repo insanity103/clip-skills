@@ -1,34 +1,22 @@
 # clips-inbox
 
-A real drop-off point for footage, using git to move files between your machine and a Claude Code
-session — not just an internal staging folder.
+Drop raw footage or clips here for review/editing in a session, instead of routing them through
+chat uploads. Point me at a file in this folder (or just say "check clips-inbox") and I'll pick it
+up with `gameplay-clip-cutter`/`vertical-clip-renderer` the same way as any other source.
 
-## How to actually use it
+Works for both roles this project has used so far:
+- **Analysis**: long raw footage to triage for candidate moments (`analyze_video.py`, `find_beats.py`,
+  `contact_sheet.py`).
+- **Rendering source**: a short high-quality trim to cut a final vertical clip from.
 
-1. Clone this repo (or pull, if you already have it) and check out this branch:
-   ```
-   git clone https://github.com/insanity103/clip-skills.git
-   cd clip-skills
-   git checkout claude/serene-curie-u72xef   # or whatever branch the session tells you it's on
-   ```
-2. Copy a video file into `clips-inbox/`.
-3. Commit and push:
-   ```
-   git add clips-inbox/your-file.mp4
-   git commit -m "Add clip for review"
-   git push
-   ```
-4. Tell the session to pull — I'll fetch the branch and the file lands in my sandbox.
+## Notes
 
-## Caveats
-
-- **GitHub blocks files over 100MB outright and warns above 50MB.** This works for the same kind of
-  short, compressed trims that worked as chat uploads earlier in this project — not multi-GB raw
-  stringouts. For long source footage, the two-stage scout-then-trim workflow documented in
-  `RESUME.md` still applies.
-- **Committed video files stay in git history permanently** (or until someone rewrites history),
-  which bloats the repo over time. Fine for a scratch/review workflow; worth cleaning up
-  (`git rm` + a follow-up commit, or a history rewrite if it gets out of hand) once a clip's done
-  with.
-- I still can't fetch a URL or watch a live stream — a file has to actually be pushed to this
-  folder (or uploaded in chat) before I can look at it.
+- Video files placed here are **not committed to git** (see `.gitignore`) — this is scratch media,
+  not repo content. They stay only in this sandbox and are lost when the session ends, so treat this
+  as a drop-off point per session, not persistent storage.
+- No hard size limit from the repo's side, but very large files (multi-GB stringouts) may be slow to
+  move into a sandbox depending on how they get here. A compressed "scout" copy for initial triage,
+  then high-quality trims of just the useful windows, worked well in past sessions — see `RESUME.md`
+  and this session's own transcript for that two-stage workflow.
+- I still can't fetch a URL or watch a live stream — a file has to actually land in this folder (or
+  be uploaded in chat) before I can look at it.
