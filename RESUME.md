@@ -4,7 +4,7 @@ Read this first. Everything the next session needs is in this folder; nothing de
 
 ## Where things stand
 
-Ten Claude Code skills for turning sponsor gameplay footage into vertical clips for paid clipping campaigns
+Eleven Claude Code skills for turning sponsor gameplay footage into vertical clips for paid clipping campaigns
 (TikTok, YouTube Shorts, Instagram Reels), plus organic (non-sponsored) format knowledge and a stylizer for
 non-brief content. Built, tested and installed on the Mac.
 
@@ -19,6 +19,7 @@ non-brief content. Built, tested and installed on the Mac.
 | clip-subject-mask | segments a subject out of one still frame with Meta's SAM (ViT-B); own PyTorch venv, not the shared one |
 | clip-subject-tracker | propagates a mask across a whole clip with SAM 2, writes a `crop_track.json` for vertical-clip-renderer's `--crop-track`; own PyTorch venv, realistically GPU-only |
 | campaign-tracker | logs posted clips per campaign to a `.xlsx`: 30-day live deadline, repost count vs. the brief's cap, engagement rate vs. its minimum |
+| clip-beat-sync | estimates a tempo/beat grid from a clip's audio and checks cut/gunshot timestamps against it, in ms - measures, never gates |
 | clipping-campaign-producer | brief → `campaign.json`; caption checker; pre-post QA gate; originality and posting rules; `selftest.py` |
 
 Verified on the Mac (macOS, Python 3.14, ffmpeg 9.0): all 116 tests pass against the installed skills; framing
@@ -113,7 +114,7 @@ README-LINUX.md    install steps for Linux
 install.sh         installs the skills, venv and runs the self-test
 FINDINGS.md        the review: what was flagged, why, with evidence
 brief.txt          the MW4 campaign brief
-skills/            the ten skills (what install.sh copies)
+skills/            the eleven skills (what install.sh copies)
 tests/             116 tests, fixtures, 4 other-genre test briefs, run_tests.sh, hud_calibration notes
 evidence/          images for the review page
 analysis/          signal timelines of the MW4 sources and clips (for re-validating edits)
