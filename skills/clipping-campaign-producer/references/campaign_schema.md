@@ -27,6 +27,7 @@ Worked example: `examples/mw4/campaign.json`.
 | `onscreen.required_text_any` | list of lists of strings | `qa_clip.py --overlay-spec` | the overlay text must contain every phrase of at least one inner list (case and spacing ignored) |
 | `onscreen.logo_required` | bool | `qa_clip.py --overlay-spec` | the overlay spec must include an image element |
 | `posting.min_days_live`, `likes_visible`, `max_reposts`, `paid_boosting` | numbers / bools | you, at handover | posting rules to hand to the user |
+| `posting.min_engagement_rate` | number, e.g. `0.002` for 0.20% | `campaign-tracker/scripts/log_post.py` | minimum likes/views ratio the brief requires; omit if the brief sets none |
 | `unmapped_rules` | list of strings | you | every brief rule the fields above cannot hold - each one is applied by hand and repeated to the user at handover |
 
 ## Brief wording → field
@@ -44,6 +45,7 @@ Worked example: `examples/mw4/campaign.json`.
 | "Up to 3 additional hashtags" / "No other hashtags" | `max_extra_hashtags: 3` / `0` |
 | "On-screen text must include 'A' and 'B' (or a close variation like 'C')" | `onscreen.required_text_any: [["A", "B"], ["C"]]` |
 | "At least 10 seconds" / "15-30 seconds" | `duration: {"min": 10}` / `{"min": 15, "max": 30}` |
+| "Minimum 0.20% engagement rate" | `posting.min_engagement_rate: 0.002` |
 | "Watermark with the official logo" | `onscreen.logo_required: true` |
 | "Logo in the top-right corner", "no slow motion", "mute voice chat", "remove licensed music", "use the provided audio file", "no other on-screen text" | `unmapped_rules` (implement in the overlay spec / edit - see the renderer's `references/sources.md` for audio tracks - then check by eye) |
 | "Crop 21:9 to 16:9 before the vertical crop" | nothing: a centred 9:16 crop from the full height gives the identical picture |

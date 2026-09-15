@@ -19,6 +19,8 @@ export PICK_COVER_SCRIPT="$SK/clip-cover-picker/scripts/pick_cover.py"
 export APPLY_STYLE_SCRIPT="$SK/clip-stylizer/scripts/apply_style.py"
 export MASK_SUBJECT_SCRIPT="$SK/clip-subject-mask/scripts/mask_subject.py"
 export TRACK_SUBJECT_SCRIPT="$SK/clip-subject-tracker/scripts/track_subject.py"
+export INIT_TRACKER_SCRIPT="$SK/campaign-tracker/scripts/init_tracker.py"
+export LOG_POST_SCRIPT="$SK/campaign-tracker/scripts/log_post.py"
 export SELFTEST_SCRIPT="$SK/clipping-campaign-producer/scripts/selftest.py"
 export CLIP_CUTTER_SCRIPTS="$SK/gameplay-clip-cutter/scripts"
 

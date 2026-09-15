@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check this machine can run the nine clip skills: tools, Python packages, fonts, then one tiny end-to-end run.
+"""Check this machine can run the ten clip skills: tools, Python packages, fonts, then one tiny end-to-end run.
 
   ~/.venvs/clipkit/bin/python ~/.claude/skills/clipping-campaign-producer/scripts/selftest.py
 
@@ -30,6 +30,8 @@ SCRIPTS = {
     "stylize": ("clip-stylizer", "apply_style.py"),
     "mask": ("clip-subject-mask", "mask_subject.py"),
     "track": ("clip-subject-tracker", "track_subject.py"),
+    "init_tracker": ("campaign-tracker", "init_tracker.py"),
+    "log_post": ("campaign-tracker", "log_post.py"),
 }
 S = {k: os.path.join(SKILLS, skill, "scripts", name) for k, (skill, name) in SCRIPTS.items()}
 FIX = {
@@ -40,7 +42,7 @@ FIX = {
               f"Debian/Ubuntu may first need: sudo apt install python3-venv)",
     "font": "Debian/Ubuntu: sudo apt install fonts-dejavu-core | Fedora: sudo dnf install dejavu-sans-fonts | "
             "Arch: sudo pacman -S ttf-dejavu",
-    "skills": "copy all nine skill folders into ~/.claude/skills (the Linux package's install.sh does this)",
+    "skills": "copy all ten skill folders into ~/.claude/skills (the Linux package's install.sh does this)",
 }
 results = []
 
@@ -75,7 +77,7 @@ def main():
     print(f"clip skills self-test - {sys.platform}, Python {sys.version.split()[0]}, skills in {SKILLS}")
     report(sys.version_info >= (3, 8), "python 3.8 or newer", sys.version.split()[0], "install Python 3.8+")
     missing = [os.path.relpath(p, SKILLS) for p in S.values() if not os.path.exists(p)]
-    report(not missing, "all nine skills installed", ", ".join(missing), FIX["skills"])
+    report(not missing, "all ten skills installed", ", ".join(missing), FIX["skills"])
     try:
         import PIL
         report(True, "pillow", PIL.__version__)
@@ -171,6 +173,16 @@ def main():
         r = run([sys.executable, S["qa"], final, "--campaign", camp, "--json", qa_json])
         ran = os.path.exists(qa_json) and json.load(open(qa_json)).get("clips")
         report(ran, "clipping-campaign-producer: qa_clip.py runs", "" if ran else tail(r))
+
+        tracker = os.path.join(td, "tracker.xlsx")
+        r = run([sys.executable, S["init_tracker"], "--campaign", camp, "--out", tracker])
+        report(r.returncode == 0 and os.path.exists(tracker), "campaign-tracker: init_tracker.py",
+               tail(r) if r.returncode else "")
+        if os.path.exists(tracker):
+            r = run([sys.executable, S["log_post"], "--tracker", tracker, "--campaign", camp,
+                     "--clip-id", "self-test", "--platform", "tiktok", "--url", "https://example.test/1",
+                     "--posted", "2026-01-01"])
+            report(r.returncode == 0, "campaign-tracker: log_post.py", tail(r) if r.returncode else "")
     finish()
 
 
