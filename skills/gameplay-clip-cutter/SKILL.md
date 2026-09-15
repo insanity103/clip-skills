@@ -55,7 +55,8 @@ S=~/.claude/skills/gameplay-clip-cutter/scripts
 
 - **The game is not a shooter, or loudness seems to miss the action** (racing engines, MOBA ability spam, horror tension, fighting-game footsies): read `references/genre_playbook.md` before trusting the ranking.
 - **A verdict looks wrong, or you want to change a threshold:** read `references/calibration.md` first — the thresholds encode real approved and flagged outcomes.
-- **The footage isn't for a paid brief, or a clip you're validating doesn't look like a highlight montage** (one continuous take, an absurdist moment montage, a facecam or split-screen layout, layered/persistent captions, a raw multi-match dump): read `references/organic_formats.md` before applying dead-air or beat-boundary rules that assume the montage format.
+- **The footage isn't for a paid brief, or a clip you're validating doesn't look like a highlight montage** (one continuous take, an absurdist moment montage, a facecam or split-screen layout, layered/persistent captions, a raw multi-match dump, a multi-act color-graded montage): read `references/organic_formats.md` before applying dead-air or beat-boundary rules that assume the montage format.
+- **Checking whether cuts or hit moments actually land on the music's beat**, or verifying a "synced to the beat" claim rather than assuming it: that's **clip-beat-sync**, not this skill - loudness-based beat *finding* here is about locating action in silent-vs-loud footage, not about musical tempo.
 - **A brief doesn't specify clip length, cut frequency, or on-screen text placement:** read `references/platform_retention.md` — general 2026 short-form editing research (length, hooks, pacing, safe zones) to fall back on. Not calibrated like `calibration.md` or `mw4_case_study.md` — defer to those and to `qa_clip.py`/`--check-safe` where they conflict.
 
 ## Common mistakes
